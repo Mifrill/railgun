@@ -1,11 +1,5 @@
 version: 2
 jobs:
-  test:
-    pre:
-      - wget http://chromedriver.storage.googleapis.com/2.22/chromedriver_linux32.zip
-      - unzip chromedriver_linux32.zip
-      - ./chromedriver --port=4444 --url-base=we/hub:
-          background: true
   build:
     working_directory: ~/circleci-demo-ruby-rails
     docker:
@@ -33,7 +27,33 @@ jobs:
           command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
 
       - run: sudo apt install postgresql-client
+      - run: sudo service postgresql start
+      - run: cp config/database.yml.travis config/database.yml
+      - run: psql -c 'create database travis_ci_test;' -U postgres
+      # Install dependencies.
+      - run: sudo apt-get update
+      - run: sudo apt-get install -y openjdk-8-jre-headless xvfb libxi6 libgconf-2-4
+      - run: sudo apt-get install xvfb -y
 
+      # Install Chrome.
+      - run: wget -N https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P ~/
+      - run: sudo dpkg -i --force-depends ~/google-chrome-stable_current_amd64.deb
+      - run: sudo apt-get -f install -y
+      - run: sudo dpkg -i --force-depends ~/google-chrome-stable_current_amd64.deb
+
+      # Install ChromeDriver.
+      - run: wget -N http://chromedriver.storage.googleapis.com/2.27/chromedriver_linux64.zip -P ~/
+      - run: unzip ~/chromedriver_linux64.zip -d ~/
+      - run: rm ~/chromedriver_linux64.zip
+      - run: sudo mv -f ~/chromedriver /usr/local/share/
+      - run: sudo chmod +x /usr/local/share/chromedriver
+      - run: sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+
+      # Install Selenium.
+      - run: wget -N http://selenium-release.storage.googleapis.com/3.0/selenium-server-standalone-3.0.1.jar -P ~/
+      - run: sudo mv -f ~/selenium-server-standalone-3.0.1.jar /usr/local/share/
+      - run: sudo chmod +x /usr/local/share/selenium-server-standalone-3.0.1.jar
+      - run: sudo ln -s /usr/local/share/selenium-server-standalone-3.0.1.jar /usr/local/bin/selenium-server-standalone-3.0.1.jar
       # Store bundle cache
       - save_cache:
           key: rails-demo-{{ checksum "Gemfile.lock" }}
