@@ -25,6 +25,10 @@ jobs:
       - run: sudo apt install postgresql-client
       # Install dependencies.
       - run: sudo apt-get install xvfb -y
+      - run: sudo apt-get install libnss3
+      - run: gem uninstall chromedriver-helper
+      - run: sudo apt-get --only-upgrade install google-chrome-stable
+      - run: gem install webdrivers
 
       # Update Google Chrome.
       - run: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
