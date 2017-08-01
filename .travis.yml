@@ -14,6 +14,7 @@ services:
 addons:
   apt:
     packages:
+    - xvfb
     - postgresql-9.6
     - postgresql-contrib-9.6
   postgresql: "9.6"
@@ -24,7 +25,7 @@ before_script:
   # Install dependencies.
   - sudo apt-get update
   - sudo apt-get install -y openjdk-8-jre-headless xvfb libxi6 libgconf-2-4
-  - sudo apt-get install xvfb -y
+  #- sudo apt-get install xvfb -y
 
   # Install Chrome.
   - wget -N https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P ~/
