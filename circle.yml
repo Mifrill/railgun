@@ -24,6 +24,7 @@ jobs:
 
       - run: sudo apt install postgresql-client
       # Install dependencies.
+      - run: sudo apt-get install xvfb -y
 
       # Update Google Chrome.
       - run: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
@@ -62,7 +63,7 @@ jobs:
             bundle exec rails db:seed
       - run:
           name: Parallel RSpec
-          command: rake ci
+          command: HEADLESS=on rake ci
 
       # Save artifacts
       - store_test_results:
