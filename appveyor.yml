@@ -12,7 +12,6 @@ install:
   - gem compile bcrypt-3.1.11.gem
   - gem install ./bcrypt-3.1.11-x86-mingw32.gem
   - cd ..
-  - choco install xvfb
   - bundle install
 build: off
 services: postgresql
@@ -24,5 +23,4 @@ test_script:
   - bundle exec rails db:structure:load
   - bundle exec rails db:seed
   - set RAILS_ENV=test
-  - set HEADLESS=on
   - bundle exec rspec
