@@ -28,8 +28,6 @@ jobs:
 
       # Install dependencies.
       - run: sudo apt-get update
-      - run: sudo apt-get install -y openjdk-8-jre-headless xvfb libxi6 libgconf-2-4
-      - run: sudo apt-get install xvfb -y
 
       # Install Chrome.
       - run: wget -N https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P ~/
