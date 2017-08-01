@@ -20,5 +20,7 @@ test_script:
   - SET PGPASSWORD=Password12!
   - PATH=C:\Program Files\PostgreSQL\9.6\bin\;%PATH%
   - set RAILS_ENV=test
-  - bin/setup railgun
+  - bundle exec rails db:create
+  - bundle exec rails db:structure:load
+  - bundle exec rails db:seed
   - HEADLESS=on rake ci
