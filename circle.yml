@@ -3,12 +3,12 @@ jobs:
   build:
     working_directory: ~/circleci-demo-ruby-rails
     docker:
-      - image: circleci/ruby:2.4.1-node
+      - image: circleci/ruby:2.4.1
         environment:
           RAILS_ENV: test
           PGHOST: 127.0.0.1
           PGUSER: root
-      - image: circleci/postgres:9.6.2-alpine
+      - image: circleci/postgres:9.6.2
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle-test_test
@@ -30,13 +30,6 @@ jobs:
       - run: CHROME_DRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
       - run: SELENIUM_STANDALONE_VERSION=3.4.0
       - run: SELENIUM_SUBDIR=$(echo "$SELENIUM_STANDALONE_VERSION" | cut -d"." -f-2)
-
-      # Remove existing downloads and binaries so we can start from scratch.
-      - run: rm ~/google-chrome-stable_current_amd64.deb
-      - run: rm ~/selenium-server-standalone-*.jar
-      - run: rm ~/chromedriver_linux64.zip
-      - run: sudo rm /usr/local/bin/chromedriver
-      - run: sudo rm /usr/local/bin/selenium-server-standalone.jar
 
       # Install dependencies.
       - run: sudo apt-get update
