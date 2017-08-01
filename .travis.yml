@@ -22,6 +22,9 @@ before_script:
   - cp config/database.yml.travis config/database.yml
   - psql -c 'create database travis_ci_test;' -U postgres
 script:
-  - RAILS_ENV=test bin/setup railgun
-  - RAILS_ENV=test rake ci
+  - cp .env.example .env
+  - bundle exec rails db:create
+  - bundle exec rails db:structure:load
+  - bundle exec rails db:seed
+  - rake ci
   - CODECLIMATE_REPO_TOKEN=0a7c2a9ff76974762fbe7151d5e4aa171f8a86682672d0b32d52ae46b10b3f44 bundle exec codeclimate-test-reporter
