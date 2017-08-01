@@ -29,12 +29,6 @@ jobs:
       # Install dependencies.
       - run: sudo apt-get update
 
-      # Install Chrome.
-      - run: wget -N https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P ~/
-      - run: sudo dpkg -i --force-depends ~/google-chrome-stable_current_amd64.deb
-      - run: sudo apt-get -f install -y
-      - run: sudo dpkg -i --force-depends ~/google-chrome-stable_current_amd64.deb
-
       # Install ChromeDriver.
       - run: wget -N http://chromedriver.storage.googleapis.com/2.27/chromedriver_linux64.zip -P ~/
       - run: unzip ~/chromedriver_linux64.zip -d ~/
@@ -43,11 +37,6 @@ jobs:
       - run: sudo chmod +x /usr/local/share/chromedriver
       - run: sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 
-      # Install Selenium.
-      - run: wget -N http://selenium-release.storage.googleapis.com/3.0/selenium-server-standalone-3.0.1.jar -P ~/
-      - run: sudo mv -f ~/selenium-server-standalone-3.0.1.jar /usr/local/share/
-      - run: sudo chmod +x /usr/local/share/selenium-server-standalone-3.0.1.jar
-      - run: sudo ln -s /usr/local/share/selenium-server-standalone-3.0.1.jar /usr/local/bin/selenium-server-standalone-3.0.1.jar
       # Store bundle cache
       - save_cache:
           key: rails-demo-{{ checksum "Gemfile.lock" }}
