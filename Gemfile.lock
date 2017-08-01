@@ -116,6 +116,10 @@ GEM
       climate_control (>= 0.0.3, < 1.0)
     codeclimate-test-reporter (1.0.8)
       simplecov (<= 0.13)
+    codecov (0.1.10)
+      json
+      simplecov
+      url
     coderay (1.1.1)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -458,6 +462,7 @@ GEM
       equalizer (~> 0.0.9)
       parser (>= 2.3.1.2, < 2.5)
       procto (~> 0.0.2)
+    url (0.3.2)
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.5.1)
@@ -489,6 +494,7 @@ DEPENDENCIES
   capybara-screenshot (~> 1.0.16)
   chromedriver-helper (~> 1.1.0)
   codeclimate-test-reporter (~> 1.0.8)
+  codecov (~> 0.1.10)
   coffee-rails (~> 4.2.2)
   devise (~> 4.3.0)
   dotenv-rails (~> 2.2.1)

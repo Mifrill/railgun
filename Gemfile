@@ -248,8 +248,9 @@ group :test do
   # Generate code coverate reports
   gem 'simplecov', '~> 0.13.0'
 
-  # Upload coverage reports to CodeClimate
+  # Upload coverage reports to CodeClimate and CodeCov.io
   gem 'codeclimate-test-reporter', '~> 1.0.8', require: nil
+  gem 'codecov', '~> 0.1.10', require: false
 
   # Test background jobs
   gem 'rspec-sidekiq', '~> 3.0.3'
