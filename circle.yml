@@ -47,7 +47,7 @@ jobs:
       - run: sudo ln -s /usr/local/share/selenium-server-standalone-3.4.0.jar /usr/local/bin/selenium-server-standalone-3.4.0.jar
 
       # Display socket is taken but lock file is missing
-      - run: pkill Xvfb
+      - run: sudo pkill Xvfb
 
       # https://github.com/leonid-shevtsov/headless/issues/47
       - run: mkdir /tmp/.X11-unix
