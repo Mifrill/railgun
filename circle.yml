@@ -26,11 +26,6 @@ jobs:
           name: Install dependencies
           command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
 
-      # Versions
-      - run: CHROME_DRIVER_VERSION=2.9
-      - run: SELENIUM_STANDALONE_VERSION=3.4.0
-      - run: SELENIUM_SUBDIR=$(echo "$SELENIUM_STANDALONE_VERSION" | cut -d"." -f-2)
-
       # Install dependencies.
       - run: sudo apt-get install software-properties-common
       - run: lsb_release --a
@@ -43,7 +38,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install google-chrome-stable
 
       # Install ChromeDriver.
-      - run: wget -N http://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -P ~/
+      - run: wget -N http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip -P ~/
       - run: unzip ~/chromedriver_linux64.zip -d ~/
       - run: rm ~/chromedriver_linux64.zip
       - run: sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
@@ -51,8 +46,8 @@ jobs:
       - run: sudo chmod 0755 /usr/local/bin/chromedriver
 
       # Install Selenium.
-      - run: wget -N http://selenium-release.storage.googleapis.com/$SELENIUM_SUBDIR/selenium-server-standalone-$SELENIUM_STANDALONE_VERSION.jar -P ~/
-      - run: sudo mv -f ~/selenium-server-standalone-$SELENIUM_STANDALONE_VERSION.jar /usr/local/bin/selenium-server-standalone.jar
+      - run: wget -N http://selenium-release.storage.googleapis.com/$SELENIUM_SUBDIR/selenium-server-standalone-3.4.0.jar -P ~/
+      - run: sudo mv -f ~/selenium-server-standalone-3.4.0.jar /usr/local/bin/selenium-server-standalone.jar
       - run: sudo chown root:root /usr/local/bin/selenium-server-standalone.jar
       - run: sudo chmod 0755 /usr/local/bin/selenium-server-standalone.jar
 
