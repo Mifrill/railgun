@@ -47,9 +47,9 @@ jobs:
       - run: sudo ln -s /usr/local/share/selenium-server-standalone-3.4.0.jar /usr/local/bin/selenium-server-standalone-3.4.0.jar
 
       # https://github.com/leonid-shevtsov/headless/issues/47
-      - mkdir /tmp/.X11-unix
-      - sudo chmod 1777 /tmp/.X11-unix
-      - sudo chown root /tmp/.X11-unix/
+      - run: mkdir /tmp/.X11-unix
+      - run: sudo chmod 1777 /tmp/.X11-unix
+      - run: sudo chown root /tmp/.X11-unix/
 
       # Bundle install dependencies
       - run:
