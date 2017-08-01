@@ -5,7 +5,6 @@ environment:
     - RUBY_VERSION: 24
 install:
   - set PATH=C:\Ruby%RUBY_VERSION%\bin;%PATH%
-  - bundle install
   - git clone https://github.com/codahale/bcrypt-ruby.git
   - cd bcrypt-ruby
   - gem build bcrypt.gemspec
@@ -13,7 +12,9 @@ install:
   - gem compile bcrypt-3.1.11.gem
   - gem install ./bcrypt-3.1.11-x86-mingw32.gem
   - cd ..
+  - gem install tzinfo
   - gem install tzinfo-data
+  - bundle install
 build: off
 services: postgresql
 test_script:
