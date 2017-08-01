@@ -23,4 +23,5 @@ test_script:
   - bundle exec rails db:structure:load
   - bundle exec rails db:seed
   - set RAILS_ENV=test
-  - HEADLESS=on rake ci
+  - set HEADLESS=on
+  - rake ci
