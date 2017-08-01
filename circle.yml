@@ -9,10 +9,10 @@ jobs:
           PGHOST: 127.0.0.1
           PGUSER: root
       - image: circleci/postgres:9.6.2-alpine
-      - image: selenium/standalone-chrome:3.1.0
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle-test_test
+      - image: selenium/standalone-chrome:3.4.0
     steps:
       - checkout
 
@@ -32,7 +32,7 @@ jobs:
       - run: sudo apt-get
 
       # Install ChromeDriver.
-      - run: wget -N http://chromedriver.storage.googleapis.com/2.27/chromedriver_linux64.zip -P ~/
+      - run: wget -N http://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip -P ~/
       - run: unzip ~/chromedriver_linux64.zip -d ~/
       - run: rm ~/chromedriver_linux64.zip
       - run: sudo mv -f ~/chromedriver /usr/local/share/
@@ -40,10 +40,10 @@ jobs:
       - run: sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 
       # Install Selenium.
-      - run: wget -N http://selenium-release.storage.googleapis.com/3.0/selenium-server-standalone-3.0.1.jar -P ~/
-      - run: sudo mv -f ~/selenium-server-standalone-3.0.1.jar /usr/local/share/
-      - run: sudo chmod +x /usr/local/share/selenium-server-standalone-3.0.1.jar
-      - run: sudo ln -s /usr/local/share/selenium-server-standalone-3.0.1.jar /usr/local/bin/selenium-server-standalone-3.0.1.jar
+      - run: wget -N http://selenium-release.storage.googleapis.com/3.0/selenium-server-standalone-3.4.0.jar -P ~/
+      - run: sudo mv -f ~/selenium-server-standalone-3.4.0.jar /usr/local/share/
+      - run: sudo chmod +x /usr/local/share/selenium-server-standalone-3.4.0.jar
+      - run: sudo ln -s /usr/local/share/selenium-server-standalone-3.4.0.jar /usr/local/bin/selenium-server-standalone-3.4.0.jar
 
       # Bundle install dependencies
       - run:
