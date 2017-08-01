@@ -120,3 +120,9 @@ RSpec.configure do |config|
   # particularly slow.
   config.profile_examples = 10
 end
+
+if ENV['HEADLESS'] == 'on'
+  require 'headless'
+  headless = Headless.new
+  headless.start
+end

@@ -256,8 +256,10 @@ group :test do
 
   # Mutation testing
   gem 'mutant-rspec', '~> 0.8.14'
-end
 
+  # interface for Xvfb
+  gem 'headless', '~> 2.3.1'
+end
 group :production do
   # Redirect from additional hosts to original
   gem 'rack-canonical-host', '~> 0.2.3'
