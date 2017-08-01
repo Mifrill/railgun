@@ -130,6 +130,6 @@ end
 
 if ENV['HEADLESS'] == 'on'
   require 'headless'
-  headless = Headless.new(autopick: true, reuse: false, destroy_at_exit: true)
+  headless = Headless.new
   headless.start
 end
