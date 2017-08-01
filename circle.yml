@@ -21,14 +21,15 @@ jobs:
             - rails-demo-{{ checksum "Gemfile.lock" }}
             - rails-demo-
 
-      # Bundle install dependencies
-      - run:
-          name: Install dependencies
-          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
-
       - run: sudo apt install postgresql-client
       # Install dependencies.
       - run: sudo apt-get update
+
+      # Update Google Chrome.
+      - run: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+      - run: sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb stable main" >> /etc/apt/sources.list.d/google.list'
+      - run: sudo apt-get update
+      - run: sudo apt-get
 
       # Install ChromeDriver.
       - run: wget -N http://chromedriver.storage.googleapis.com/2.27/chromedriver_linux64.zip -P ~/
@@ -43,12 +44,16 @@ jobs:
       - run: sudo mv -f ~/selenium-server-standalone-3.0.1.jar /usr/local/share/
       - run: sudo chmod +x /usr/local/share/selenium-server-standalone-3.0.1.jar
       - run: sudo ln -s /usr/local/share/selenium-server-standalone-3.0.1.jar /usr/local/bin/selenium-server-standalone-3.0.1.jar
+
+      # Bundle install dependencies
+      - run:
+          name: Install dependencies
+          command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
       # Store bundle cache
       - save_cache:
           key: rails-demo-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-
       - run:
           name: Database Setup
           command: |

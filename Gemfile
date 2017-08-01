@@ -234,7 +234,7 @@ group :development, :test do
 
   # Test with real Chrome
   gem 'selenium-webdriver', '~> 3.4.4'
-  gem 'chromedriver-helper', '~> 1.1.0' unless ENV['CIRCLECI']
+  gem 'chromedriver-helper', '~> 1.1.0'
 
   # Testing Rack::Attack
   gem 'rack-test', '~> 0.6.3'
