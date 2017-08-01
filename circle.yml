@@ -74,7 +74,7 @@ jobs:
             bundle exec rails db:seed
       - run:
           name: Parallel RSpec
-          command: HEADLESS=on rake ci
+          command: HEADLESS=on bundle exec rspec
 
       # Save artifacts
       - store_test_results:
