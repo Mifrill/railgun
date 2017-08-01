@@ -39,12 +39,6 @@ jobs:
       - run: sudo chmod +x /usr/local/share/chromedriver
       - run: sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
 
-      # Install Selenium.
-      - run: wget -N http://selenium-release.storage.googleapis.com/3.0/selenium-server-standalone-3.4.0.jar -P ~/
-      - run: sudo mv -f ~/selenium-server-standalone-3.4.0.jar /usr/local/share/
-      - run: sudo chmod +x /usr/local/share/selenium-server-standalone-3.4.0.jar
-      - run: sudo ln -s /usr/local/share/selenium-server-standalone-3.4.0.jar /usr/local/bin/selenium-server-standalone-3.4.0.jar
-
       # Bundle install dependencies
       - run:
           name: Install dependencies
