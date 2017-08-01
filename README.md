@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/Mifrill/railgun.svg?branch=master)](https://travis-ci.org/Mifrill/railgun)
+[![Build status](https://ci.appveyor.com/api/projects/status/pvt5qew0jcpt33io?svg=true)](https://ci.appveyor.com/project/Mifrill/railgun)
 [![Quality](http://img.shields.io/codeclimate/github/zharikovpro/railgun.svg)](https://codeclimate.com/github/zharikovpro/railgun)
 [![Coverage Status](https://img.shields.io/codeclimate/coverage/github/Mifrill/railgun.svg)](https://codeclimate.com/github/mifrill/railgun)
 [![codecov](https://codecov.io/gh/Mifrill/railgun/branch/master/graph/badge.svg)](https://codecov.io/gh/Mifrill/railgun)
