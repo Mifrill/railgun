@@ -13,7 +13,7 @@ install:
   - gem compile bcrypt-3.1.11.gem
   - gem install ./bcrypt-3.1.11-x86-mingw32.gem
   - cd ..
-  - gem 'tzinfo-data'
+  - gem install tzinfo-data
 build: off
 services: postgresql
 test_script:
