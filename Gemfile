@@ -184,6 +184,9 @@ gem 'graphql', '~> 1.6.6'
 # enable cross-origin resource sharing
 gem 'rack-cors', '~> 0.4.1', require: 'rack/cors'
 
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
 group :development do
   # Run app in background for faster reload
   gem 'spring', '~> 2.0.2'
