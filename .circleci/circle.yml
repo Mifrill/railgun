@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build:
-    parallelism: 3
     working_directory: ~/circleci-demo-ruby-rails
     docker:
       - image: circleci/ruby:2.4.1-node
@@ -73,9 +72,9 @@ jobs:
             bundle exec rails db:create
             bundle exec rails db:structure:load
             bundle exec rails db:seed
-
-      - type: shell
-        command: HEADLESS=on rake ci
+      - run:
+          name: Parallel RSpec
+          command: HEADLESS=on rake ci
 
       # Save artifacts
       - store_test_results:
