@@ -24,4 +24,5 @@ test_script:
   - bundle exec rails db:seed
   - set RAILS_ENV=test
   - set HEADLESS=on
-  - rake ci
+  - CODECOV_TOKEN=e5f8d659-68e3-4dee-bbf7-96cda9a20a4d
+  - bundle exec rake ci
