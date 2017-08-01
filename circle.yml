@@ -26,38 +26,45 @@ jobs:
           name: Install dependencies
           command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs 4 --retry 3
 
-      # Install dependencies.
-      - run: sudo apt-get install xvfb -y
-      - run: sudo apt-get install libnss3
-      - run: gem install webdrivers
+      # Versions
+      - run: CHROME_DRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE`
+      - run: SELENIUM_STANDALONE_VERSION=3.4.0
+      - run: SELENIUM_SUBDIR=$(echo "$SELENIUM_STANDALONE_VERSION" | cut -d"." -f-2)
 
-      # Update Google Chrome.
-      - run: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-      - run: sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb stable main" >> /etc/apt/sources.list.d/google.list'
+      # Remove existing downloads and binaries so we can start from scratch.
+      - run: rm ~/google-chrome-stable_current_amd64.deb
+      - run: rm ~/selenium-server-standalone-*.jar
+      - run: rm ~/chromedriver_linux64.zip
+      - run: sudo rm /usr/local/bin/chromedriver
+      - run: sudo rm /usr/local/bin/selenium-server-standalone.jar
+
+      # Install dependencies.
       - run: sudo apt-get update
-      - run: sudo apt-get
+      - run: sudo apt-get install -y unzip openjdk-8-jre-headless xvfb libxi6 libgconf-2-4
+
+      # Install Chrome.
+      - run: wget -N https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P ~/
+      - run: sudo dpkg -i --force-depends ~/google-chrome-stable_current_amd64.deb
+      - run: sudo apt-get -f install -y
+      - run: sudo dpkg -i --force-depends ~/google-chrome-stable_current_amd64.deb
 
       # Install ChromeDriver.
-      - run: wget -N http://chromedriver.storage.googleapis.com/2.9/chromedriver_linux64.zip -P ~/
+      - run: wget -N http://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip -P ~/
       - run: unzip ~/chromedriver_linux64.zip -d ~/
       - run: rm ~/chromedriver_linux64.zip
-      - run: sudo mv -f ~/chromedriver /usr/local/share/
-      - run: sudo chmod +x /usr/local/share/chromedriver
-      - run: sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+      - run: sudo mv -f ~/chromedriver /usr/local/bin/chromedriver
+      - run: sudo chown root:root /usr/local/bin/chromedriver
+      - run: sudo chmod 0755 /usr/local/bin/chromedriver
 
       # Install Selenium.
-      - run: wget -N http://selenium-release.storage.googleapis.com/3.4/selenium-server-standalone-3.4.0.jar -P ~/
-      - run: sudo mv -f ~/selenium-server-standalone-3.4.0.jar /usr/local/share/
-      - run: sudo chmod +x /usr/local/share/selenium-server-standalone-3.4.0.jar
-      - run: sudo ln -s /usr/local/share/selenium-server-standalone-3.4.0.jar /usr/local/bin/selenium-server-standalone-3.4.0.jar
+      - run: wget -N http://selenium-release.storage.googleapis.com/$SELENIUM_SUBDIR/selenium-server-standalone-$SELENIUM_STANDALONE_VERSION.jar -P ~/
+      - run: sudo mv -f ~/selenium-server-standalone-$SELENIUM_STANDALONE_VERSION.jar /usr/local/bin/selenium-server-standalone.jar
+      - run: sudo chown root:root /usr/local/bin/selenium-server-standalone.jar
+      - run: sudo chmod 0755 /usr/local/bin/selenium-server-standalone.jar
 
-      # Display socket is taken but lock file is missing
+      # Install xvfb
+      - run: sudo apt-get install xvfb -y
       - run: sudo pkill Xvfb
-
-      # https://github.com/leonid-shevtsov/headless/issues/47
-      - run: mkdir /tmp/.X11-unix
-      - run: sudo chmod 1777 /tmp/.X11-unix
-      - run: sudo chown root /tmp/.X11-unix/
 
       # Store bundle cache
       - save_cache:
@@ -70,13 +77,9 @@ jobs:
             bundle exec rails db:create
             bundle exec rails db:structure:load
             bundle exec rails db:seed
-      # Run rspec in parallel
-      - type: shell
-        command: |
-          HEADLESS=on bundle exec rspec --profile 10 \
-                            --out /tmp/test-results/rspec.xml \
-                            --format progress \
-                            $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)
+      - run:
+          name: Parallel RSpec
+          command: HEADLESS=on rake ci
 
       # Save artifacts
       - store_test_results:
