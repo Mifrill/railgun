@@ -34,15 +34,10 @@ jobs:
       # Install dependencies.
       - run: sudo apt-get install software-properties-common
       - run: sudo add-apt-repository ppa:webupd8team/java
-      - run: cd /var/lib/apt/lists/
-      - run: sudo rm -fr *
-      - run: cd /etc/apt/sources.list.d/
-      - run: sudo rm -fr *
-      - run: cd /etc/apt
-      - run: sudo cp sources.list sources.list.old
-      - run: sudo cp sources.list sources.list.tmp
-      - run: sudo sed 's/ubuntuarchive.hnsdc.com/us.archive.ubuntu.com/' sources.list.tmp | sudo tee sources.list
-      - run: sudo rm sources.list.tmp*
+      - run: sudo cp /etc/apt/sources.list ~/
+      - run: sudo wget "http://pastebin.com/raw.php?i=uzhrtg5M" -O /etc/apt/sources.list
+      - run: sudo apt-get update
+      - run: sudo rm /etc/apt/sources.list.d/ubuntu-extras.list
       - run: sudo apt-get clean
       - run: sudo apt-get update
       - run: sudo apt-get install oracle-java8-installer
