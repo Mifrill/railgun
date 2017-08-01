@@ -1,0 +1,31 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/appName
+    docker:
+      - image: ruby:2.3.1
+        environment:
+        - PG_HOST=localhost
+        - PG_USER=ubuntu
+        - RAILS_ENV=test
+        - RACK_ENV=test
+      - image: postgres:9.5
+        environment:
+        - POSTGRES_USER=ubuntu
+        - POSTGRES_DB=db_name
+    steps:
+      - checkout
+      - name: Install System Dependencies
+        command: apt-get update -qq && apt-get install -y build-essential postgresql libpq-dev nodejs rake
+      - name: Install Ruby Dependencies
+        command: bundle install
+      - name: Set up DB
+        command: |
+          bundle exec rails db:create
+          bundle exec rails db:structure:load
+          bundle exec rails db:seed
+        environment:
+          DATABASE_URL: "postgres://ubuntu@localhost:5432/db_name"
+      - run:
+          name: Run tests
+          command: rake ci
