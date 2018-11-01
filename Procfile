@@ -1,3 +1,3 @@
-release: bundle exec rails db:migrate
+release: bin/setup railgun
 web: bundle exec passenger start -p $PORT --max-pool-size 3
-worker: bundle exec sidekiq
+worker: bundle exec rails s
