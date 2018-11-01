@@ -1,3 +1,5 @@
+Paperclip::Attachment.default_options[:storage] = 'filesystem'
+=begin
 if Rails.env.development? || Rails.env.test?
   Paperclip::Attachment.default_options[:storage] = 'filesystem'
 else
@@ -17,3 +19,4 @@ else
     # https://github.com/thoughtbot/paperclip/wiki/Restricting-Access-to-Objects-Stored-on-Amazon-S3
   )
 end
+=end
